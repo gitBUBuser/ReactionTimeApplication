@@ -1,0 +1,8 @@
+clip_start||00:00:00:00||guide||
+ee_pause||00:00:00:22||pause_start||
+ee_pause||00:00:01:22||pause_end ||
+ee_pause||00:00:02:10||stimuli||
+clip_start||00:00:06:04||guide ||
+quiet_pause||00:00:12:21||pause_start||
+quiet_pause||00:00:13:11||pause_end||
+quiet_pause||00:00:13:20||stimuli||
