@@ -1,4 +1,5 @@
 import sys
+import os
 from os import listdir
 from os.path import isfile, join
 import time
@@ -6,17 +7,20 @@ import pandas as pd
 from pydub import AudioSegment
 from pydub.playback import play
 import copy
-save_path_audio = "/home/baserad/Documents/GitHub/ReactionTimeApplication/Data/Stimuli/Data"
-save_path_stimdata = ""
-path_to_guides = "/home/baserad/Documents/GitHub/ReactionTimeApplication/Data/Stimuli/Labels 1.txt"
-path_to_audio = "/home/baserad/Documents/GitHub/ReactionTimeApplication/Data/Stimuli/data_aud.mp3"
 
-exp1_filled_stimuli_output = "/home/baserad/Documents/GitHub/ReactionTimeApplication/Data/Stimuli/Data/Experiment1/real/filled"
-exp1_silent_stimuli_output = "/home/baserad/Documents/GitHub/ReactionTimeApplication/Data/Stimuli/Data/Experiment1/real/quiet"
-exp2_filled_stimuli_output = "/home/baserad/Documents/GitHub/ReactionTimeApplication/Data/Stimuli/Data/Experiment2/real/filled"
-exp2_silent_stimuli_output = "/home/baserad/Documents/GitHub/ReactionTimeApplication/Data/Stimuli/Data/Experiment2/real/silent"
-exp1_filler_output = "/home/baserad/Documents/GitHub/ReactionTimeApplication/Data/Stimuli/Data/Experiment1/filler"
-exp2_filler_output = "/home/baserad/Documents/GitHub/ReactionTimeApplication/Data/Stimuli/Data/Experiment2/filler"
+
+dir = os.getcwd()
+save_path_audio = os.path.join(dir,"/Data/Labels")
+save_path_stimdata = os.path.join(dir, "/Data/data_ebben_full")
+path_to_guides = os.path.join(dir,"/Data/Labels")
+path_to_audio = os.path.join(dir, "/Data/data_ebben_full")
+
+exp1_filled_stimuli_output = os.path.join(dir, "/Data/Stimuli/Data/Experiment1/real/filled")
+exp1_silent_stimuli_output = os.path.join(dir,"Data/Stimuli/Data/Experiment1/real/quiet")
+exp2_filled_stimuli_output = os.path.join(dir, "/Data/Stimuli/Data/Experiment2/real/filled")
+exp2_silent_stimuli_output = os.path.join(dir,"/Data/Stimuli/Data/Experiment2/real/silent")
+exp1_filler_output = os.path.join(dir, "/Data/Stimuli/Data/Experiment1/filler")
+exp2_filler_output = os.path.join(dir, "/Data/Stimuli/Data/Experiment2/filler")
 
 def cast(value):
     return float(value)
@@ -160,7 +164,9 @@ def save_data(tracks):
 
     
 
-
+print(path_to_audio)
+print(path_to_guides)
+print(dir)
 frames = get_frames(path_to_guides)
 audio = AudioSegment.from_mp3(path_to_audio)
 add_segments(audio, frames)
