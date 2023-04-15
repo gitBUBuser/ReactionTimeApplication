@@ -123,20 +123,20 @@ def add_outputs(tracks):
     for key in tracks.keys():
         if tracks[key]["filler"] == "True":
             if tracks[key]["condition"] == "exp1":
-                tracks[key]["out"] = join(exp1_filler_output, f"track_{key}")
+                tracks[key]["out"] = join(exp1_filler_output, f"track_{key}.mp3")
             else:
-                tracks[key]["out"] = join(exp2_filler_output, f"track_{key}")
+                tracks[key]["out"] = join(exp2_filler_output, f"track_{key}.mp3")
         else:
             if tracks[key]["condition"] == "exp1":
                 if "s" in key:
-                    tracks[key]["out"] = join(exp1_silent_stimuli_output, f"track_{key}")
+                    tracks[key]["out"] = join(exp1_silent_stimuli_output, f"track_{key}.mp3")
                 else:
-                    tracks[key]["out"] = join(exp1_filled_stimuli_output, f"track_{key}")
+                    tracks[key]["out"] = join(exp1_filled_stimuli_output, f"track_{key}.mp3")
             else:
                 if "s" in key:
-                    tracks[key]["out"] = join(exp2_silent_stimuli_output, f"track_{key}")
+                    tracks[key]["out"] = join(exp2_silent_stimuli_output, f"track_{key}.mp3")
                 else:
-                    tracks[key]["out"] = join(exp2_filled_stimuli_output, f"track_{key}")
+                    tracks[key]["out"] = join(exp2_filled_stimuli_output, f"track_{key}.mp3")
 
 def save_data(tracks):
     save_frame = {
