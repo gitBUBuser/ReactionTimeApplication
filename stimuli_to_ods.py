@@ -9,18 +9,18 @@ from pydub.playback import play
 import copy
 
 
-dir = os.getcwd()
-save_path_audio = os.path.join(dir,"/Data/Labels")
-save_path_stimdata = os.path.join(dir, "/Data/data_ebben_full")
-path_to_guides = os.path.join(dir,"/Data/Labels")
-path_to_audio = os.path.join(dir, "/Data/data_ebben_full")
+dir = "/home/baserad/Documents/GitHub/ReactionTimeApplication/"
 
-exp1_filled_stimuli_output = os.path.join(dir, "/Data/Stimuli/Data/Experiment1/real/filled")
+save_path_stimdata = os.path.join(dir, "Data/")
+path_to_guides = os.path.join(dir,"Data/Labels_ebben.txt")
+path_to_audio = os.path.join(dir, "Data/data_ebben.mp3")
+
+exp1_filled_stimuli_output = os.path.join(dir, "Data/Stimuli/Data/Experiment1/real/filled")
 exp1_silent_stimuli_output = os.path.join(dir,"Data/Stimuli/Data/Experiment1/real/quiet")
-exp2_filled_stimuli_output = os.path.join(dir, "/Data/Stimuli/Data/Experiment2/real/filled")
-exp2_silent_stimuli_output = os.path.join(dir,"/Data/Stimuli/Data/Experiment2/real/silent")
-exp1_filler_output = os.path.join(dir, "/Data/Stimuli/Data/Experiment1/filler")
-exp2_filler_output = os.path.join(dir, "/Data/Stimuli/Data/Experiment2/filler")
+exp2_filled_stimuli_output = os.path.join(dir, "Data/Stimuli/Data/Experiment2/real/filled")
+exp2_silent_stimuli_output = os.path.join(dir,"Data/Stimuli/Data/Experiment2/real/silent")
+exp1_filler_output = os.path.join(dir, "Data/Stimuli/Data/Experiment1/filler")
+exp2_filler_output = os.path.join(dir, "Data/Stimuli/Data/Experiment2/filler")
 
 def cast(value):
     return float(value)
@@ -31,7 +31,7 @@ def get_frames(file):
         labeled_tracks = {}
         track_index_int  = 0
 
-        tracks = labels.split("b")
+        tracks = labels.split("*")
 
         for track in tracks:
             lines = track.split("\n")
