@@ -7,7 +7,7 @@ import pandas as pd
 from pydub import AudioSegment
 from pydub.playback import play
 import copy
-
+import re
 
 dir = "/home/baserad/Documents/GitHub/ReactionTimeApplication/"
 
@@ -92,6 +92,7 @@ def add_segments(audio, tracks):
 def generate_quiet_pauses(audio, tracks):
     silent_tapes = {}
     for key in tracks.keys():
+        tracks[key]["replaced"] = "silence"
         if tracks[key]["filler"] == "False":
             ms_start = tracks[key]["start"] * 1000
             ms_end = tracks[key]["end"] * 1000
@@ -103,6 +104,7 @@ def generate_quiet_pauses(audio, tracks):
         
             silent_pause_track = tracks[key].copy()
             silent_pause_track["pause_type"] = "silent"
+            silent_pause_track["replaced"] = tracks[key]["pause_type"]
 
             silent_pause = AudioSegment.silent(duration=ms_pause_duration)
             silent_pause_track["audio"] = audio[ms_start:ms_pause_start] + silent_pause + audio[ms_pause_end:ms_end]
@@ -121,6 +123,7 @@ def generate_quiet_pauses(audio, tracks):
 
 def add_outputs(tracks):
     for key in tracks.keys():
+        tracks[key]["id"] = re.search("^[0-9]*", key).group(0)
         if tracks[key]["filler"] == "True":
             if tracks[key]["condition"] == "exp1":
                 tracks[key]["out"] = join(exp1_filler_output, f"track_{key}.mp3")
@@ -141,7 +144,10 @@ def add_outputs(tracks):
 def save_data(tracks):
     save_frame = {
         "out": [],
+        "id": [],
         "condition": [],
+        "replaced": [],
+        "filler": [],
         "duration": [],
         "relative_pause_onset": [],
         "relative_pause_end": [],
