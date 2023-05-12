@@ -25,20 +25,23 @@ def access_stimuli_start(df, attribute):
                 return df['relative_stimuli_onset'][i]
 
 def access_stimuli_property(df, attribute_id, attribute):
+    silent = False
     if 's' in attribute_id:
         id = attribute_id.replace('s', '')
-        relevant_indeces = np.arange(120, df.shape[0])
-        for i in relevant_indeces:
-            stimuli_id = df['id'][i]
-            if float(stimuli_id) == float(id):
-                return df[attribute][i]
+        silent = True
     else:
         id = attribute_id
-        relevant_indeces = np.arange(0, 120)
-        for i in relevant_indeces:
-            stimuli_id = df['id'][i]
-            if float(stimuli_id) == float(id):
-                return df[attribute][i]
+
+    for i in range(df.shape[0]):
+        stimuli_id = df['id'][i]
+        silent_stim = df['pause_type'][i]
+        if float(stimuli_id) == float(id):
+            if silent == True:
+                if df['pause_type'][i] == "silent":
+                    return df[attribute][i]
+            else:
+                if df['pause_type'][i] != "silent":
+                    return df[attribute][i]
 
 
 # först -- jag vill få reaktionstider per stimuli
@@ -60,7 +63,8 @@ def save_frame(stimuli):
         "stimuli_onset": [],
         "replaced": [],
         "target": [],
-        "handedness": []
+        "handedness": [],
+        "silent": []
     }
     return frame
     
@@ -120,13 +124,18 @@ for participant_folder in os.listdir(participants_path):
                 save_f["stimuli_length"].append(access_stimuli_property(out_file, stimuli, "stimuli_duration"))
                 save_f["target"].append(access_stimuli_property(out_file, stimuli, "target"))
                 save_f["handedness"].append(handedness)
+                if 's' in stimuli:
+                    save_f["silent"].append("True")
+                else:
+                    save_f["silent"].append("False")
+
 
             else:
                 save_f["age"].append(age)
                 save_f["participant_id"].append(p_id)
                 save_f["gender"].append(gender)
                 save_f["stimuli_id"].append(stimuli)
-                save_f["reaction_time"].append("missed")
+                save_f["reaction_time"].append(1000)
                 save_f["pause_type"].append(access_stimuli_property(out_file, stimuli, "pause_type"))
                 save_f["condition"].append(access_stimuli_property(out_file, stimuli, "condition"))
                 save_f["replaced"].append(access_stimuli_property(out_file, stimuli, "replaced"))
@@ -136,6 +145,10 @@ for participant_folder in os.listdir(participants_path):
                 save_f["stimuli_length"].append(access_stimuli_property(out_file, stimuli, "stimuli_duration"))
                 save_f["target"].append(access_stimuli_property(out_file, stimuli, "target"))
                 save_f["handedness"].append(handedness)
+                if 's' in stimuli:
+                    save_f["silent"].append("True")
+                else:
+                    save_f["silent"].append("False")
 
 print(save_f)
                 
